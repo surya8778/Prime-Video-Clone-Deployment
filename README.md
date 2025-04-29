@@ -92,7 +92,7 @@ pipeline {
         }
         stage ("Git checkout") {
             steps {
-                git branch: 'main', url: 'https://github.com/yeshwanthlm/Prime-Video-Clone-Deployment.git'
+                git branch: 'main', url: 'https://github.com/surya8778/Prime-Video-Clone-Deployment.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -128,15 +128,15 @@ pipeline {
         }
         stage ("Build Docker Image") {
             steps {
-                sh "docker build -t amazon-prime ."
+                sh "sudo docker build -t amazon-prime ."
             }
         }
         stage ("Tag & Push to DockerHub") {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker') {
-                        sh "docker tag amazon-prime amonkincloud/amazon-prime:latest "
-                        sh "docker push amonkincloud/amazon-prime:latest "
+                        sh "docker tag amazon-prime surya877/amazon-prime:latest "
+                        sh "docker push surya877/amazon-prime:latest "
                     }
                 }
             }
@@ -145,9 +145,9 @@ pipeline {
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh 'docker-scout quickview amonkincloud/amazon-prime:latest'
-                       sh 'docker-scout cves amonkincloud/amazon-prime:latest'
-                       sh 'docker-scout recommendations amonkincloud/amazon-prime:latest'
+                       sh 'docker-scout quickview surya877/amazon-prime:latest'
+                       sh 'docker-scout cves surya877/amazon-prime:latest'
+                       sh 'docker-scout recommendations surya877/amazon-prime:latest'
                    }
                 }
             }
