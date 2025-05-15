@@ -92,7 +92,7 @@ pipeline {
         }
         stage ("Git checkout") {
             steps {
-                git branch: 'main', url: 'https://github.com/yeshwanthlm/Prime-Video-Clone-Deployment.git'
+                git branch: 'main', url: 'https://github.com/surya8778/Prime-Video-Clone-Deployment.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -135,8 +135,8 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker') {
-                        sh "docker tag amazon-prime amonkincloud/amazon-prime:latest "
-                        sh "docker push amonkincloud/amazon-prime:latest "
+                        sh "docker tag amazon-prime surya877/amazon-prime:latest "
+                        sh "docker push surya877/amazon-prime:latest "
                     }
                 }
             }
@@ -145,16 +145,16 @@ pipeline {
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh 'docker-scout quickview amonkincloud/amazon-prime:latest'
-                       sh 'docker-scout cves amonkincloud/amazon-prime:latest'
-                       sh 'docker-scout recommendations amonkincloud/amazon-prime:latest'
+                       sh 'docker-scout quickview surya877/amazon-prime:latest'
+                       sh 'docker-scout cves surya877/amazon-prime:latest'
+                       sh 'docker-scout recommendations surya877/amazon-prime:latest'
                    }
                 }
             }
         }
         stage ("Deploy to Conatiner") {
             steps {
-                sh 'docker run -d --name amazon-prime -p 3000:3000 amonkincloud/amazon-prime:latest'
+                sh 'docker run -d --name amazon-prime -p 3000:3000 surya877/amazon-prime:latest'
             }
         }
     }
@@ -177,7 +177,7 @@ pipeline {
                 </body>
                 </html>
             """,
-            to: 'provide_your_Email_id_here',
+            to: 'suryaks877@gmail.com',
             mimeType: 'text/html',
             attachmentsPattern: 'trivy.txt'
         }
